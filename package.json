@@ -1,0 +1,53 @@
+{
+  "name": "webpackdemo",
+  "sideEffects": [
+    "*.scss"
+  ],
+  "version": "1.0.0",
+  "description": "使用webpack 5.74构建前端项目",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --config ./build/webpack.dev.js",
+    "server": "nodemon ./build/server.js",
+    "build:dev": "webpack --config build/webpack.dev.js",
+    "build": "webpack --config build/webpack.prod.js",
+    "generateAnalyzerFile": "webpack --profile --json > stats.json",
+    "analyzer": "webpack-bundle-analyzer --port 8888 ./dist/stats.json"
+  },
+  "keywords": [],
+  "author": "wangyuanyuan",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.12",
+    "clean-webpack-plugin": "^4.0.0",
+    "cors": "^2.8.5",
+    "css-loader": "^6.7.1",
+    "css-minimizer-webpack-plugin": "^4.2.2",
+    "express": "^4.18.2",
+    "express-jwt": "^7.7.7",
+    "express-session": "^1.17.3",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "http-server": "^14.1.1",
+    "image-webpack-loader": "^8.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "mini-css-extract-plugin": "^2.6.1",
+    "node-sass": "^7.0.3",
+    "nodemon": "^2.0.20",
+    "postcss": "^8.4.18",
+    "postcss-loader": "^7.0.1",
+    "sass-loader": "^13.1.0",
+    "style-loader": "^3.3.1",
+    "terser-webpack-plugin": "^5.3.6",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.74.0",
+    "webpack-bundle-analyzer": "^4.7.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.7.3"
+  },
+  "dependencies": {
+    "jquery": "^3.6.1",
+    "lodash": "^4.17.21"
+  }
+}
