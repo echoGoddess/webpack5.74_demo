@@ -3,3 +3,6 @@ node_modules
 
 # 模块分析工具产生的资源文件
 stats.json
+
+.svn
+.git
