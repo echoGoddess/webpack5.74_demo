@@ -25,7 +25,7 @@ module.exports = merge(common,{
     },
     plugins:[
         new webpack.DefinePlugin({ // 定义环境变量
-            'process.env.NODE_ENV': JSON.stringify('production')
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
         }),
         new MiniCssExtractPlugin({
             filename:"[name].[contenthash].css",

@@ -4,6 +4,16 @@ import "./style.scss";
 import imgBaby from "./assets/images/baby.jpg";
 import {printMe} from "./print";
 
+class Layout{
+  static b =2;
+  constructor(){
+    this.a= 1;
+    
+  }
+}
+const layout = new Layout();
+console.log(layout);
+
 function component() {
     var element = document.createElement('div');
     const eleSpan = document.createElement('span');
@@ -45,3 +55,17 @@ function component() {
   //     window.navigator.serviceWorker.register()
   //   })
   // }
+
+  function  test(){
+    return new Promise((resolve,reject)=>{
+      resolve(124)
+    });
+  }
+
+  test();
+
+  const arr = [1,2,3,4].map((item)=>item*item);
+  const hasNum = (num)=>[4,5,6,7,8].includes(num);
+  const hasNum1 = (num)=>[4,5,6,7,8,9].includes(num);
+
+  console.log("-------------------babel",test(),arr,hasNum(2),hasNum1(3));

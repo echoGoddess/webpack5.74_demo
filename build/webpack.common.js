@@ -4,8 +4,10 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 // const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
+const {VueLoaderPlugin} = require("vue-loader");
 
 // const MyPlugin = require("../src/plugins/FileListPlugin");
+const env = process.env.NODE_ENV;
 
 module.exports = {
     entry:{
@@ -20,10 +22,24 @@ module.exports = {
     module:{
         rules:[
             {
+                test:/\.vue$/,
+                use:"vue-loader",
+                exclude: /node_modules/,
+            },
+            {
+                test: /\.m?js$/,
+                exclude: /node_modules/,
+                use: {
+                  loader: 'babel-loader'
+                }
+            },
+            {
                 test: /\.s[ac]ss$/,
                 exclude: /node_modules/,
                 use:[
-                        MiniCssExtractPlugin.loader, // 分割出css
+                        // 开发环境使用vue-style-loader，实现样式热更新
+                        // 生产环境使用minCssExtractPlugin，分割出css
+                        env === "production" ? MiniCssExtractPlugin.loader : "vue-style-loader",
                         // "custom-style-loader",
                         "css-loader", // css编译成commonJS模块
                         "postcss-loader", // 添加浏览器前缀
@@ -90,6 +106,7 @@ module.exports = {
         // new MyPlugin({
         //     title:"custom-plugin"
         // }),
+        new VueLoaderPlugin(),
         new CleanWebpackPlugin(),
          // 分析bundle内容、大小、模块间的关系
         new BundleAnalyzerPlugin({

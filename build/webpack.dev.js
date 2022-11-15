@@ -29,6 +29,9 @@ module.exports = merge(common,{
         }
     },
     plugins:[
+        new webpack.DefinePlugin({ // 定义环境变量
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+        }),
          // 将css样式从bundle中分离出来，打包成一个单独的css
         new MiniCssExtractPlugin({
             filename:"[name].css",

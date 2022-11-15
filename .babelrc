@@ -1,0 +1,14 @@
+{
+	// preset即一些plugins组成的合集
+	"presets": [
+	  [
+		// 转译ES语法，比如箭头函数、const、let
+		"@babel/preset-env",
+		{
+			// 按需引入ES API
+		  "useBuiltIns": "usage",
+		  "corejs": "3.22"
+		}
+	  ]
+	]
+  }
