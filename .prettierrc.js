@@ -1,4 +1,5 @@
 // 定义编写规则
+// prettier添加：https://blog.csdn.net/a843334549/article/details/115391605
 module.exports = {
     printWidth: 80, //单行长度
     tabWidth: 2, //缩进长度
