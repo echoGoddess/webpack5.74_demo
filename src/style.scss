@@ -1,26 +1,26 @@
-@font-face{
-    font-family: myFont;
-    src:url('./assets/fonts/my-font.ttf');
-    font-weight: 800;
-    font-style: normal;
+@font-face {
+  font-family: myFont;
+  src: url("./assets/fonts/my-font.ttf");
+  font-weight: 800;
+  font-style: normal;
 }
 
 .hello {
-    overflow: hidden;
-    border-radius:10px;
-    border:solid 4px aqua;
-    border-radius: 5px;
-    animation:hello 5s infinite;
-    background:lightgray url("./assets/images/baby.jpg");
-    span{
-        background:blue;
-        font-family: myFont;
-    }
-    img{
-        float: right;
-        top:0;
-        width:200px;
-    }
+  overflow: hidden;
+  border-radius: 10px;
+  border: solid 4px aqua;
+  border-radius: 5px;
+  animation: hello 5s infinite;
+  background: lightgray url("./assets/images/baby.jpg");
+  span {
+    background: blue;
+    font-family: myFont;
+  }
+  img {
+    float: right;
+    top: 0;
+    width: 200px;
+  }
 }
 $body-color: red;
 

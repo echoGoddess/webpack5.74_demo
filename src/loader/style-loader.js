@@ -1,21 +1,13 @@
 // style-loader
-const {
-    getOptions,
-    parseQuery,
-    stringifyRequest
-} = require("loader-utils");
-const {
-    validate
-} = require("schema-utils");
+const { parseQuery, stringifyRequest } = require("loader-utils");
 
-module.exports = function(source){
-    const options = getOptions(this);
-    parseQuery("?param1=foo");
-    stringifyRequest(this, "test/lib/index.js")
-    let style = `
+module.exports = function (source) {
+  parseQuery("?param1=foo");
+  stringifyRequest(this, "test/lib/index.js");
+  const style = `
         let style = document.createElement('style');
         style.innerHTML = ${JSON.stringify(source)};
         document.head.appendChild(style)
   `;
-    return style;
-}
+  return style;
+};

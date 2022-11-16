@@ -7,7 +7,7 @@
 		{
 			// 按需引入ES API
 		  "useBuiltIns": "usage",
-		  "corejs": "3.22"
+		  "corejs": "3.26"
 		}
 	  ]
 	]
