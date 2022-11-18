@@ -20,21 +20,31 @@ module.exports = {
     path: path.resolve(__dirname, "../dist")
     // publicPath:"/" // 资源被引用的根路径,仅作用于线上
   },
+  // 不需要打包的第三方模块
+  // 不需要更新版本的模块：如lodash
+  externals: {
+    // _: "lodash"
+  },
+  // 配置解析模块规则
+  resolve: {
+    // 配置解析模块别名
+    alias: {
+      "@": path.resolve(__dirname, "../src")
+    },
+    // 配置省略文件路径的后缀名
+    extensions: [".js", ".vue", ".json", ".scss"],
+    // 配置webpack解析模块去哪个目录找
+    modules: [path.resolve(__dirname, "../node_modules")]
+  },
   module: {
     rules: [
       {
         test: /\.vue$/,
-        use: "vue-loader",
-        exclude: /node_modules/
+        use: "vue-loader"
       },
       {
-        test: /\.m?js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader"
-        }
-      },
-      {
+        // 普通的 `.scss` 文件和 `*.vue` 文件中的
+        // `<style lang="scss">` 块都应用它
         test: /\.s[ac]ss$/,
         exclude: /node_modules/,
         use: [
@@ -44,10 +54,27 @@ module.exports = {
             ? MiniCssExtractPlugin.loader
             : "vue-style-loader",
           // "custom-style-loader",
-          "css-loader", // css编译成commonJS模块
+          {
+            loader: "css-loader",
+            options: {
+              esModule: false
+            }
+          },
+          // "css-loader", // css编译成commonJS模块
           "postcss-loader", // 添加浏览器前缀
           "sass-loader" // sass编译成css
         ]
+      },
+      {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"]
+      },
+      {
+        test: /\.m?js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader"
+        }
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
