@@ -18,7 +18,7 @@ module.exports = merge(common, {
     port: 9000,
     hot: true, // 启用模块热更新
     https: false, // 是否使用https,默认使用http
-    open: true, // 服务启动后，默认是否打开浏览器
+    // open: true, // 服务启动后，默认是否打开浏览器
     proxy: {
       // 代理服务器
       "/api": {
