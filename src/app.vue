@@ -1,14 +1,14 @@
 <template>
-  <div class="content">hello vue3</div>
+  <div class="content">hello vue3 <Test /></div>
 </template>
 <script>
-// TODO:导入样式文件可正确编译，style中样式被忽略
-// import "./style.scss";
+import "./style.scss";
 
 export default {};
 </script>
-<style scoped lang="scss">
+
+<style lang="scss">
 .content {
-  color: red;
+  color: tomato;
 }
 </style>
