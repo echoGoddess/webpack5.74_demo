@@ -1,5 +1,12 @@
 <template>
-  <div class="content">hello vue3 <Test /></div>
+  <div class="content">
+    hello vue3
+    <router-view v-slot="{ Component, route }">
+      <transition :mode="route.meta.mode || 'out-in'">
+        <component :is="Component"></component>
+      </transition>
+    </router-view>
+  </div>
 </template>
 <script>
 import "./style.scss";

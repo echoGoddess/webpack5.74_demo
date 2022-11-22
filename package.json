@@ -62,7 +62,9 @@
     "webpack-dev-server": "^4.7.3"
   },
   "dependencies": {
+    "js-cookie": "^3.0.1",
     "lodash": "^4.17.21",
-    "vue": "^3.2.45"
+    "vue": "^3.2.45",
+    "vue-router": "^4.1.6"
   }
 }
