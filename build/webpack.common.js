@@ -117,6 +117,7 @@ module.exports = {
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
         // 将引入的字体文件路径打包到dist中，功能相当于file-loader
+        // TODO:字体文件体积过大，可以提取常用字体并异步加载，或者使用CDN
         type: "asset/resource",
         generator: {
           filename: "static/fonts/[name][ext][query]"
@@ -144,7 +145,7 @@ module.exports = {
     // 分析bundle内容、大小、模块间的关系
     new BundleAnalyzerPlugin({
       analyzerMode: "disabled", // 不启动生成报告的http服务器
-      generateStatsFile: true // 是否生成stats.json文件，但是会在目录下生成stats.json,可以设置为false来规避
+      generateStatsFile: true // 是否生成stats.json文件，会在目录下生成stats.json,可以设置为false来规避
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "../src/template.html"),
@@ -157,22 +158,23 @@ module.exports = {
     // })
   ],
   optimization: {
+    // TODO:待优化
     splitChunks: {
       // 分割代码，单独打包
-      minSize: 0, // 单个模块大小超过该值时，进行分割 KB TODO:暂时设置为0
+      minSize: 20000, // 单个模块大小超过该值时，进行分割 bytes
       cacheGroups: {
         // 缓存组
         commons: {
           chunks: "initial", // 将什么类型的代码块用于分割，三选一： "initial"：入口代码块 | "all"：全部 | "async"：按需加载的代码块
           minChunks: 2, // 一个模块最小被2个模块引用，才需要提出来成为单独的模块
           maxInitialRequests: 5 // 初始化页面时，最大可并行请求5个模块
-        },
-        vendors: {
-          // 提取公共模块
-          test: /node_modules/,
-          chunks: "initial",
-          name: "vendor"
         }
+        // vendors: {
+        //   // 提取公共模块
+        //   test: /node_modules/,
+        //   chunks: "initial",
+        //   name: "vendor"
+        // }
       }
     }
   }
