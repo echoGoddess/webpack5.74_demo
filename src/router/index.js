@@ -21,7 +21,9 @@ const router = createRouter({
 
 // 全局后置钩子
 router.afterEach((to, from, failure) => {
-  if (failure) console.log("----aftereach-failure", failure);
+  if (failure) {
+    console.log("----aftereach-failure", failure);
+  }
 });
 
 // 捕获导航期间抛出的错误
