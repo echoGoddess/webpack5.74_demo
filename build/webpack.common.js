@@ -6,6 +6,9 @@ const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 // const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
+const AutoImport = require("unplugin-auto-import/webpack");
+const Components = require("unplugin-vue-components/webpack");
+const { ElementPlusResolver } = require("unplugin-vue-components/resolvers");
 
 // const MyPlugin = require("../src/plugins/FileListPlugin");
 const env = process.env.NODE_ENV;
@@ -150,6 +153,15 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "../src/template.html"),
       title: "webpackDemo"
+    }),
+    // 自动按需引入element-plus组件
+    AutoImport({
+      resolvers: [ElementPlusResolver()]
+    }),
+    Components({
+      extensions: ["vue"],
+      include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+      resolvers: [ElementPlusResolver()]
     })
     // 离线应用程序
     // new WorkboxWebpackPlugin.GenerateSW({
