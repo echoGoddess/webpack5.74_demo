@@ -159,8 +159,6 @@ module.exports = {
       resolvers: [ElementPlusResolver()]
     }),
     Components({
-      extensions: ["vue"],
-      include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
       resolvers: [ElementPlusResolver()]
     })
     // 离线应用程序
@@ -180,13 +178,13 @@ module.exports = {
           chunks: "initial", // 将什么类型的代码块用于分割，三选一： "initial"：入口代码块 | "all"：全部 | "async"：按需加载的代码块
           minChunks: 2, // 一个模块最小被2个模块引用，才需要提出来成为单独的模块
           maxInitialRequests: 5 // 初始化页面时，最大可并行请求5个模块
+        },
+        vendors: {
+          // 提取公共模块
+          test: /node_modules/,
+          chunks: "initial",
+          name: "vendor"
         }
-        // vendors: {
-        //   // 提取公共模块
-        //   test: /node_modules/,
-        //   chunks: "initial",
-        //   name: "vendor"
-        // }
       }
     }
   }
