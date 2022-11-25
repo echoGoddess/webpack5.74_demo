@@ -4,6 +4,8 @@ const common = require("./webpack.common");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = merge(common, {
   mode: "production",
@@ -31,6 +33,11 @@ module.exports = merge(common, {
     new MiniCssExtractPlugin({
       filename: "[name].[contenthash].css",
       chunkFilename: "[id].[contenthash].css"
+    }),
+    // 分析bundle内容、大小、模块间的关系
+    new BundleAnalyzerPlugin({
+      analyzerMode: "disabled", // 不启动生成报告的http服务器
+      generateStatsFile: true // 是否生成stats.json文件，会在目录下生成stats.json,可以设置为false来规避
     })
   ],
   optimization: {
