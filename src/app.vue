@@ -1,33 +1,30 @@
 <template>
-  <!-- <el-config-provider :size="size" :z-index="zIndex"> -->
-  <div class="content">
-    <span>hello vue3</span>
-    <!-- <el-button>I am ElButton</el-button> -->
-    <router-view v-slot="{ Component, route }">
-      <transition :mode="route.meta.mode || 'out-in'">
-        <component :is="Component"></component>
-      </transition>
-    </router-view>
-  </div>
-  <!-- </el-config-provider> -->
+  <el-config-provider :locale="locale" :size="size" :z-index="zIndex">
+    <div class="content">
+      <span>hello vue3</span>
+      <el-button type="primary">Primary</el-button>
+      <router-view v-slot="{ Component, route }">
+        <Transition :name="route.meta.mode || 'fade'">
+          <component :is="Component"></component>
+        </Transition>
+      </router-view>
+    </div>
+  </el-config-provider>
 </template>
-<script>
-import "./style.scss";
-import { defineComponent } from "vue";
-// import { ElConfigProvider } from "element-plus";
 
-// 熟悉vue的defineComponent和setup概念
-// 引入element-plus组件库
-export default defineComponent({
-  components: {
-    // ElConfigProvider
-  },
-  setup() {
-    return {
-      zIndex: 3000,
-      size: "small"
-    };
-  }
+<script setup>
+// 使用组合式API+SFC风格开发
+
+import "./style.scss";
+import { ref, onMounted } from "vue";
+import zhCn from "element-plus/dist/locale/zh-cn.mjs";
+
+const zIndex = ref(3000);
+const size = ref("small");
+const locale = ref(zhCn);
+
+onMounted(() => {
+  console.log("----------------app.count", zIndex, size);
 });
 </script>
 
