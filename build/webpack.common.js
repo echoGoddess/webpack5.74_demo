@@ -16,14 +16,18 @@ const env = process.env.NODE_ENV;
 
 module.exports = {
   entry: {
-    index: "./src/index.js"
-    // print:"./src/print.js"
+    index: "./src/index.js",
+    print: "./src/print.js"
   },
   output: {
-    filename: "[name].[chunkhash].js",
+    filename:
+      env === "production"
+        ? "[name].[chunkhash].bundle.js"
+        : "[name].bundle.js",
     path: path.resolve(__dirname, "../dist"),
-    pathinfo: false // bundle中不输出路径
-    // publicPath:"/" // 资源被引用的根路径,仅作用于线上
+    pathinfo: false, // bundle中不输出路径
+    // todo:静态资源放到CDN服务器上
+    publicPath: env === "production" ? "https://cdn-server.com/static/" : ""
   },
   // 不需要打包的第三方模块
   // 不需要更新版本的模块：如lodash
@@ -43,7 +47,7 @@ module.exports = {
       path.resolve(__dirname, "../node_modules"),
       path.resolve(__dirname, "./src")
     ],
-    // todo:啥意思
+    // 关闭符号链接
     symlinks: false
   },
   module: {
@@ -89,14 +93,6 @@ module.exports = {
             }
           },
           "postcss-loader", // 添加浏览器前缀
-          {
-            // TODO:让耗时的postcss-loader，在独立的线程池中运行
-            // 其开销大约为 600ms 左右,所以只在耗时的操作中使用此loader
-            loader: "thread-loader",
-            options: {
-              workerParallelJobs: 2
-            }
-          },
           "sass-loader" // sass编译成css
         ]
       },
@@ -215,22 +211,38 @@ module.exports = {
     // })
   ],
   optimization: {
-    // TODO:待优化
+    // 单独打包runtime的chunk，减小入口chunk的体积
+    runtimeChunk: true,
+    // todo:分割代码-待优化
     splitChunks: {
-      // 分割代码，单独打包
-      minSize: 20000, // 单个模块大小超过该值时，进行分割 bytes
+      // 单个模块大小超过该值时，进行分割 bytes
+      // minSize: 20000,
+      // 缓存组
       cacheGroups: {
-        // 缓存组
-        commons: {
-          chunks: "initial", // 将什么类型的代码块用于分割，三选一： "initial"：入口代码块 | "all"：全部 | "async"：按需加载的代码块
-          minChunks: 2, // 一个模块最小被2个模块引用，才需要提出来成为单独的模块
-          maxInitialRequests: 5 // 初始化页面时，最大可并行请求5个模块
-        },
+        chunks: "all",
         vendors: {
-          // 提取公共模块
-          test: /node_modules/,
-          chunks: "initial"
+          // 匹配node_modules中的模块
+          test: /[\\/]node_modules[\\/]/,
+          // 分割代码方式 "initial"：入口代码块 | "all"：全部 | "async"：按需加载的代码块
+          chunks: "all",
+          // 优先级-多个缓存组时适用
+          priority: 20,
+          // 告诉 webpack 忽略 splitChunks.minSize、splitChunks.minChunks、splitChunks.maxAsyncRequests 和 splitChunks.maxInitialRequests 选项
+          // 并始终为此缓存组创建 chunk。
+          enforce: true
+          // 不要给name赋值，
+          // 否则会将指定字符串或始终返回相同字符串的函数会将所有常见模块和 vendor 合并为一个 chunk。
+          // 这可能会导致更大的初始下载量并减慢页面加载速度
           // name: "vendor"
+        },
+        common: {
+          // 一个模块最小被2个模块引用，才需要提出来成为单独的模块
+          minChunks: 2,
+          // 初始化页面时，最大可并行请求数量
+          maxInitialRequests: 30,
+          priority: -20,
+          // 是否复用已经从原代码块中分割出来的模块
+          reuseExistingChunk: true
         }
       }
     }

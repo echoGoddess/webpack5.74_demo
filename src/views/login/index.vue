@@ -1,5 +1,11 @@
 <template>
-  <div>Login</div>
+  <div>Login<el-button type="primary" @click="login">login</el-button></div>
 </template>
-<script></script>
+<script setup>
+import { reactive } from "vue";
+const state = reactive({ name: "", password: "" });
+function login() {
+  console.log("--------login", state);
+}
+</script>
 <style lang="scss" scoped></style>

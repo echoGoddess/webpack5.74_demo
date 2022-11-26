@@ -1,4 +1,6 @@
 const webpack = require("webpack");
+const glob = require("glob");
+const path = require("path");
 const { merge } = require("webpack-merge");
 const common = require("./webpack.common");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -6,6 +8,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const { PurgeCSSPlugin } = require("purgecss-webpack-plugin");
 
 module.exports = merge(common, {
   mode: "production",
@@ -45,6 +48,13 @@ module.exports = merge(common, {
     minimizer: [
       // 压缩css
       new CssMinimizerPlugin(),
+      // TODO:对css进行treeshaking
+      // 目前treeshaking忽略*.vue文件时，sass-loader会报错，待修复
+      new PurgeCSSPlugin({
+        paths: glob.sync(`${path.join(__dirname, "../src")}/**/*`, {
+          nodir: true
+        })
+      }),
       // 压缩js (清除debugger\console;支持ES6语法)
       // terserPlugin 配置官网=>https://webpack.docschina.org/plugins/terser-webpack-plugin/
       new TerserPlugin({
