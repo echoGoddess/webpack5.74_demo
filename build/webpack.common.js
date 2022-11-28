@@ -220,8 +220,8 @@ module.exports = {
     // })
   ],
   optimization: {
-    // 单独打包runtime的chunk，减小入口chunk的体积
-    runtimeChunk: true,
+    // 单独打包runtime的chunk，减小入口chunk的体积(和提取公共模块不兼容)
+    // runtimeChunk: true,
     // 指定打包过程中的chunkId，设为named会生成可读性好的chunkId，便于debug
     // chunkIds: "named",
     // todo:分割代码-待优化
@@ -256,9 +256,7 @@ module.exports = {
           // 初始化页面时，最大可并行请求数量
           maxInitialRequests: 6,
           // 当模块同时命中多个缓存组时，分配到优先级高的缓存组
-          priority: -20,
-          // 是否复用已经从原代码块中分割出来的模块
-          reuseExistingChunk: true
+          priority: -20
         }
       }
     }
