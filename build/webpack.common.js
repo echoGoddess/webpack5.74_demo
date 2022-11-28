@@ -82,7 +82,10 @@ module.exports = {
             : "vue-style-loader",
           // "custom-style-loader",
           {
-            loader: "css-loader"
+            loader: "css-loader",
+            options: {
+              esModule: false
+            }
           },
           {
             // 让耗时的postcss-loader，在独立的线程池中运行
@@ -100,7 +103,13 @@ module.exports = {
         test: /\.css$/i,
         use: [
           env === "production" ? MiniCssExtractPlugin.loader : "style-loader",
-          "css-loader",
+          {
+            loader: "css-loader",
+            options: {
+              // 默认使用ES模块导出,关闭后，使用commonjs模块导出
+              esModule: false
+            }
+          },
           {
             // 让耗时的postcss-loader，在独立的线程池中运行
             // 其开销大约为 600ms 左右,所以只在耗时的操作中使用此loader
@@ -213,15 +222,19 @@ module.exports = {
   optimization: {
     // 单独打包runtime的chunk，减小入口chunk的体积
     runtimeChunk: true,
+    // 指定打包过程中的chunkId，设为named会生成可读性好的chunkId，便于debug
+    // chunkIds: "named",
     // todo:分割代码-待优化
     splitChunks: {
       // 单个模块大小超过该值时，进行分割 bytes
       // minSize: 20000,
       // 缓存组
+      // 缓存组打包的chunk命名 false:避免对 chunk 进行不必要的命名，以减小打包体积(建议线上环境使用)
+      name: false,
       cacheGroups: {
         chunks: "all",
+        // 匹配node_modules中使用到的模块
         vendors: {
-          // 匹配node_modules中的模块
           test: /[\\/]node_modules[\\/]/,
           // 分割代码方式 "initial"：入口代码块 | "all"：全部 | "async"：按需加载的代码块
           chunks: "all",
@@ -235,11 +248,14 @@ module.exports = {
           // 这可能会导致更大的初始下载量并减慢页面加载速度
           // name: "vendor"
         },
+        // 从入口出发，提取重复模块
         common: {
+          chunks: "initial",
           // 一个模块最小被2个模块引用，才需要提出来成为单独的模块
           minChunks: 2,
           // 初始化页面时，最大可并行请求数量
-          maxInitialRequests: 30,
+          maxInitialRequests: 6,
+          // 当模块同时命中多个缓存组时，分配到优先级高的缓存组
           priority: -20,
           // 是否复用已经从原代码块中分割出来的模块
           reuseExistingChunk: true
