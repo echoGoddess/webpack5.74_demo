@@ -1,8 +1,8 @@
 # webpack5.74_demo
 
-##技术栈
+## 技术栈
 > webpack5、vue3、vue-router、pinia、element-plus、node、es6、typescript、sass、eslint、prettier
-其中 pinia、node、typescript正在添加中
+其中 pinia、node、typescript正在完善中
 
 ## 依赖安装
 ```
