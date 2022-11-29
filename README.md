@@ -47,4 +47,4 @@ npm run lint
 npm run lint-fix
 ```
 ## 建议
-> 使用vscode开发，并安装volar、eslint、prettier插件
+> 使用vscode开发，并安装volar、eslint、prettier扩展程序
