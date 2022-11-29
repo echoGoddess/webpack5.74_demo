@@ -37,6 +37,16 @@ module.exports = merge(common, {
       filename: "[name].[contenthash].css",
       chunkFilename: "[id].[contenthash].css"
     }),
+    // 对css进行treeshaking
+    new PurgeCSSPlugin({
+      paths: glob.sync(`${path.join(__dirname, "../src")}/**/*`, {
+        nodir: true
+      }),
+      safelist: {
+        // 保留html、body里的样式，保留el-开头的类名
+        standard: ["html", "body", /^el-/]
+      }
+    }),
     // 分析bundle内容、大小、模块间的关系
     new BundleAnalyzerPlugin({
       analyzerMode: "disabled", // 不启动生成报告的http服务器
@@ -48,13 +58,6 @@ module.exports = merge(common, {
     minimizer: [
       // 压缩css
       new CssMinimizerPlugin(),
-      // TODO:对css进行treeshaking
-      // 目前treeshaking忽略*.vue文件时，sass-loader会报错，待修复
-      new PurgeCSSPlugin({
-        paths: glob.sync(`${path.join(__dirname, "../src")}/**/*`, {
-          nodir: true
-        })
-      }),
       // 压缩js (清除debugger\console;支持ES6语法)
       // terserPlugin 配置官网=>https://webpack.docschina.org/plugins/terser-webpack-plugin/
       new TerserPlugin({
