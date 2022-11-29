@@ -35,16 +35,12 @@ npm run generateAnalyzerFile
 npm run analyzer
 ```
 
-## 分析构建的包
-```
-npm run generateAnalyzerFile
-npm run analyzer
-```
-
 ## jslint
 ```
 npm run lint
 npm run lint-fix
 ```
+
 ## 建议
 > 使用vscode开发，并安装volar、eslint、prettier扩展程序
+保存时，即可按规则规范代码，不需要单独执行jslint
