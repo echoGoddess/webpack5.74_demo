@@ -12,7 +12,7 @@
   </el-config-provider>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // 使用组合式API+SFC风格开发
 import "./style.scss";
 import { ref, onMounted } from "vue";

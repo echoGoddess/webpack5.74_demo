@@ -16,7 +16,7 @@ const env = process.env.NODE_ENV;
 
 module.exports = {
   entry: {
-    index: "./src/index.js",
+    index: "./src/index.ts",
     print: "./src/print.js"
   },
   output: {
@@ -40,8 +40,11 @@ module.exports = {
     alias: {
       "@": path.resolve(__dirname, "../src")
     },
+    // 解析目录时要使用的文件名
+    // 导入模块时，可省略index文件名
+    // mainFields:["index"],
     // 配置省略文件路径的后缀名
-    extensions: [".js", ".vue", ".json", ".scss"],
+    extensions: [".tsx", ".ts", ".d.ts", ".vue", ".js", ".json", ".scss"],
     // 配置webpack解析模块去哪个目录找
     modules: [
       path.resolve(__dirname, "../node_modules"),
@@ -56,7 +59,7 @@ module.exports = {
         test: /\.vue$/,
         use: [
           {
-            // 让耗时的postcss-loader，在独立的线程池中运行
+            // 让耗时的vue-loader，在独立的线程池中运行
             // 其开销大约为 600ms 左右,所以只在耗时的操作中使用此loader
             loader: "thread-loader",
             options: {
@@ -122,8 +125,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.m?js$/,
-        // include: path.resolve(__dirname, "../src"),
+        test: /\.(ts|js)$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader"
@@ -204,10 +206,16 @@ module.exports = {
     }),
     // 自动按需引入element-plus组件
     AutoImport({
-      resolvers: [ElementPlusResolver()]
+      imports: ["vue", "vue-router"],
+      resolvers: [ElementPlusResolver()],
+      dts: "./auto-imports.d.ts",
+      eslintrc: {
+        enabled: false
+      }
     }),
     Components({
-      resolvers: [ElementPlusResolver()]
+      resolvers: [ElementPlusResolver()],
+      dts: "./components.d.ts"
     }),
     // 进度条
     new ProgressBarPlugin({
@@ -224,7 +232,7 @@ module.exports = {
     // runtimeChunk: true,
     // 指定打包过程中的chunkId，设为named会生成可读性好的chunkId，便于debug
     // chunkIds: "named",
-    // todo:分割代码-待优化
+    // 分割代码
     splitChunks: {
       // 单个模块大小超过该值时，进行分割 bytes
       // minSize: 20000,

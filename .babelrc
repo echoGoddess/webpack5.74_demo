@@ -9,6 +9,14 @@
 		  "useBuiltIns": "usage",
 		  "corejs": "3.26"
 		}
+	  ],
+	[
+		// 引用Typescript插件
+		"@babel/preset-typescript",
+		{
+			// 支持所有文件扩展名，否则在vue文件中使用ts会报错
+		  "allExtensions": true 
+		}
 	  ]
 	]
   }
