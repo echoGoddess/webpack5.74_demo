@@ -3,5 +3,7 @@
 .browserslistrc
 .gitignore
 .prettierrc.js
+auto-imports.d.ts
+components.d.ts
 
 /node_modules
