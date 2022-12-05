@@ -215,7 +215,10 @@ module.exports = {
     }),
     Components({
       resolvers: [ElementPlusResolver()],
-      dts: "./components.d.ts"
+      dts: "./components.d.ts",
+      eslintrc: {
+        enabled: false
+      }
     }),
     // 进度条
     new ProgressBarPlugin({
