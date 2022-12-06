@@ -1,6 +1,6 @@
 module.exports = {
   parser:"vue-eslint-parser",
-  env: {
+  env: { // 您的环境变量（包含多个预定义的全局变量）
     browser: true,
     es2021: true,
     node: true,
@@ -15,13 +15,13 @@ module.exports = {
   overrides: [
   ],
   parserOptions: {
-    parser:"@typescript-eslint/parser",
+    parser:"@typescript-eslint/parser", // 添加ts解析器
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
   plugins: [
     'vue',
-    '@typescript-eslint',
+    '@typescript-eslint', // 添加ts解析规则
     'prettier'
   ],
   rules: {
@@ -32,8 +32,13 @@ module.exports = {
         ignores: ["index"], //需要忽略的组件名
       },
     ],
-    // 不允许使用var
-    "@typescript-eslint/no-unused-vars": "error",
+    // 禁用var
+    "no-var":"error",
+     // 优先使用 interface 而不是 type
+    '@typescript-eslint/consistent-type-definitions': [
+      "error",
+      "interface"
+    ],
     // 允许导入没有声明文件的模块
     "@typescript-eslint/no-var-requires":0
   },

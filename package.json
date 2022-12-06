@@ -15,8 +15,8 @@
     "build": "cross-env NODE_ENV=production webpack --config build/webpack.prod.js",
     "generateAnalyzerFile": "webpack --profile --json > stats.json",
     "analyzer": "webpack-bundle-analyzer --port 8888 ./dist/stats.json",
-    "lint": "eslint --ext .js,.ts,.d.ts,.tsx,.vue src/",
-    "lint-fix": "eslint --fix --ext .js,.ts,.d.ts,.tsx,.vue src/"
+    "lint": "eslint --ext .js,.ts,.tsx,.vue src/",
+    "lint-fix": "eslint --fix --ext .js,.ts,.tsx,.vue src/"
   },
   "keywords": [],
   "author": "wangyuanyuan",

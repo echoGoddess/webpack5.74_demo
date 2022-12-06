@@ -44,7 +44,7 @@ module.exports = {
     // 导入模块时，可省略index文件名
     // mainFields:["index"],
     // 配置省略文件路径的后缀名
-    extensions: [".tsx", ".ts", ".d.ts", ".vue", ".js", ".json", ".scss"],
+    extensions: [".ts", ".vue", ".js", ".tsx", ".json", ".scss"],
     // 配置webpack解析模块去哪个目录找
     modules: [
       path.resolve(__dirname, "../node_modules"),

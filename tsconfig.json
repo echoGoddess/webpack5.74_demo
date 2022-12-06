@@ -8,20 +8,20 @@
       "experimentalDecorators": true, // 模块名到基于 baseUrl的路径映射的列表。
       "skipLibCheck": true, // 忽略所有的声明文件（ *.d.ts）的类型检查。
       "esModuleInterop": true, // 支持在 CommonJs 模块下使用 import d from 'cjs', 解决TypeScript 对于 CommonJs/AMD/UMD 模块与 ES6 模块处理方式相同导致的问题
+      "allowJs":true, // 允许编译JS文件
       "allowSyntheticDefaultImports": true, // 允许从没有设置默认导出的模块中默认导入。这并不影响代码的输出，仅为了类型检查。
       "sourceMap": true, // 生成相应的 .map文件。
       "baseUrl": ".", // 解析非相对模块名的基准目录, 相对模块不会受baseUrl的影响
       "paths": {
-        // 用于设置模块名称到基于baseUrl的路径映射
-        "@/*": ["src/*"]
+        "@/*": ["src/*"] // 用于设置模块名称到基于baseUrl的路径映射
       },
-      "lib": ["esnext", "dom", "dom.iterable", "scripthost"] // lib用于指定要包含在编译中的库文件
+      "lib": ["esnext", "dom", "dom.iterable", "scripthost"], // lib用于指定要包含在编译中的库文件
+      // "noEmitOnError": false,// 有错误时不生成编译文件
     },
-    // 默认编译 .ts, .tsx, and .d.ts 文件
+    // 默认编译 .ts, and .d.ts 文件
     "include": [
       "src/**/*.ts",
       "src/**/*.d.ts",
-      "src/**/*.tsx",
       "src/**/*.vue",
       "src/**/**/*.vue",
       "./auto-imports.d.ts",
