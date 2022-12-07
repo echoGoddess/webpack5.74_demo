@@ -17,7 +17,7 @@ const env = process.env.NODE_ENV;
 module.exports = {
   entry: {
     index: "./src/index.ts",
-    print: "./src/print.js"
+    print: "./src/print.ts"
   },
   output: {
     filename:
