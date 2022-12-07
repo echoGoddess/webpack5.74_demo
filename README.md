@@ -6,41 +6,40 @@
 
 ## 依赖安装
 ```
-npm i
+yarn
 ```
 
 ## 启动前端服务
 ```
-npm run start
+yarn run start
 ```
 
 ## 启动后端服务
 ```
-npm run server
+yarn run server
 ```
 
 ## 构建开发环境包
 ```
-npm run build:dev
+yarn run build:dev
 ```
 
 ## 构建线上环境包
 ```
-npm run build
+yarn run build
 ```
 
 ## 分析构建的包
 ```
-npm run generateAnalyzerFile
-npm run analyzer
+yarn run generateAnalyzerFile
+yarn run analyzer
 ```
 
 ## jslint
 ```
-npm run lint
-npm run lint-fix
+yarn run lint
+yarn run lint-fix
 ```
 
 ## 建议
 > 使用vscode开发，并安装volar、eslint、prettier、typescript vue plugin、error lens扩展程序
-保存时，即可按规则规范代码，不需要单独执行jslint
