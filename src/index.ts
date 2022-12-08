@@ -8,8 +8,8 @@ import "element-plus/theme-chalk/base.css";
 
 const app = createApp(App);
 
-app.config.errorHandler = err => {
-  console.log("------捕获组件抛出的错误", err);
+app.config.errorHandler = (err, instance, info) => {
+  console.log("------捕获应用内抛出的错误", err, instance, info);
 };
 
 // 注册全局自定义指令(自定义指令主要是为了重用，涉及底层DOM元素访问的逻辑)
