@@ -1,4 +1,8 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import {
+  createRouter,
+  createWebHashHistory,
+  RouteLocationNormalized
+} from "vue-router";
 import Cookies from "js-cookie";
 import routes from "./routes";
 
@@ -11,11 +15,9 @@ const router = createRouter({
 const isLogin = Cookies.get("token");
 
 // 全局前置钩子
-router.beforeEach((to, from, next) => {
+router.beforeEach((to: RouteLocationNormalized) => {
   if (to.meta.requireAuth && !isLogin && to.name !== "Login") {
     return { name: "Login" };
-  } else {
-    next();
   }
 });
 

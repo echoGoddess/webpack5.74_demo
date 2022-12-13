@@ -7,12 +7,3 @@ declare module "*.vue" {
 // declare module "vue" {
 //   interface ComponentCustomProperties {}
 // }
-
-// 定义应用内抛出的未捕获错误
-interface AppConfig {
-  errorHandler?: (
-    error: unknown,
-    instance: ComponentPublicInstance | null,
-    info: string
-  ) => void;
-}
