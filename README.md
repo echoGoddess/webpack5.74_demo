@@ -1,8 +1,10 @@
 # webpack5.74_demo
 
 ## 技术栈
-> webpack5、vue3、vue-router、pinia、element-plus、node、es6、typescript、sass、eslint、prettier
-其中 pinia、node、typescript正在完善中
+> webpack5、vue3、vue-router、pinia、element-plus、node、es6、typescript、sass、eslint、prettier、mockjs
+其中 pinia、node正在完善中
+
+目前接口使用是mock，后续将添加mysql启用后端服务
 
 ## 依赖安装
 ```
