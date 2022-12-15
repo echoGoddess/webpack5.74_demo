@@ -6,7 +6,11 @@ import App from "./app.vue";
 import { ElCollapseTransition } from "element-plus";
 import "element-plus/theme-chalk/base.css";
 import "normalize.css";
-// TODO: 导入mock
+const importMock = () => import("@/mock");
+
+if (process.env.NODE_ENV !== "production") {
+  importMock();
+}
 
 const app = createApp(App);
 

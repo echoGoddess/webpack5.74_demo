@@ -2,7 +2,7 @@
   <h1>WEBPACK5 && VUE3</h1>
   <div class="loginContainer">
     <el-form
-      ref="loginForm"
+      ref="refLoginForm"
       :model="userInfo"
       label-width="80px"
       label-position="left"
@@ -10,9 +10,9 @@
       size="default"
       class="loginForm"
     >
-      <el-form-item label="用户名" prop="name">
+      <el-form-item label="用户名" prop="username">
         <el-input
-          v-model="userInfo.name"
+          v-model="userInfo.username"
           placeholder="请输入用户名"
           clearable
         ></el-input>
@@ -26,39 +26,47 @@
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="login(loginForm)">登录</el-button>
-        <el-button type="primary" @click="reset(loginForm)">重置</el-button>
+        <el-button type="primary" @click="loginForm(refLoginForm)"
+          >登录</el-button
+        >
+        <el-button type="primary" @click="reset(refLoginForm)">重置</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 <script setup lang="ts">
 import { ref, reactive } from "vue";
-import type { FormInstance, FormRules } from "element-plus";
+import { ElMessage, FormInstance, FormRules } from "element-plus";
 import router from "@/router";
+import { login } from "@/api/user";
+import Cookies from "js-cookie";
 
 interface UserInfo {
-  name: string;
+  username: string;
   password: string;
 }
 
-const loginForm = ref<FormInstance>();
+const refLoginForm = ref<FormInstance>();
 
-const userInfo = reactive<UserInfo>({ name: "", password: "" });
+const userInfo = reactive<UserInfo>({ username: "", password: "" });
 
 const validateName = (rule: any, value: any, callback: any) => {
+  const reg = /^[a-zA-Z]\w{3,15}/;
   if (value === "") {
     callback(new Error("请输入用户名"));
-  } else {
-    callback();
+    return;
   }
+  if (!reg.test(value)) {
+    callback(new Error("请输入4-15位字母"));
+    return;
+  }
+  callback();
 };
 
 const rules = reactive<FormRules>({
-  name: [
+  username: [
     {
       required: true,
-      message: "请输入用户名",
       validator: validateName,
       trigger: "blur"
     }
@@ -66,8 +74,20 @@ const rules = reactive<FormRules>({
   password: [{ required: true, message: "请输入密码", trigger: "blur" }]
 });
 
-const login = (formEl: FormInstance | undefined) => {
-  router.push("/home");
+const loginForm = async (formEl: FormInstance | undefined) => {
+  if (!formEl) return;
+  await formEl.validate(async (valid: boolean): Promise<void> => {
+    if (valid) {
+      const { username, password } = userInfo;
+      const res = await login({ username, password });
+      if (res && res.token) {
+        Cookies.set("token", res.token);
+        router.push("/home");
+      }
+    } else {
+      ElMessage.error("验证失败");
+    }
+  });
 };
 
 const reset = (formEl: FormInstance | undefined) => {

@@ -1,4 +1,4 @@
-// TODO:对axios进行二次封装
+// 对axios进行二次封装
 import axios from "axios";
 import type {
   AxiosInstance,
