@@ -80,6 +80,7 @@
     "js-cookie": "^3.0.1",
     "lodash-es": "^4.17.21",
     "normalize.css": "^8.0.1",
+    "pinia": "^2.0.28",
     "vue": "^3.2.45",
     "vue-demi": "^0.13.11",
     "vue-router": "^4.1.6"

@@ -1,4 +1,5 @@
 import { createApp } from "vue";
+import { createPinia } from "pinia";
 import router from "./router";
 import "dayjs/locale/zh-cn";
 import App from "./app.vue";
@@ -13,6 +14,8 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const app = createApp(App);
+
+const pinia = createPinia();
 
 app.config.errorHandler = (err, instance, info) => {
   console.log("------捕获应用内抛出的错误", err, instance, info);
@@ -35,6 +38,9 @@ app.component(ElCollapseTransition.name, ElCollapseTransition);
 
 // 安装全局插件
 app.use(router);
+
+// 添加pinia状态管理器
+app.use(pinia);
 
 // 挂载根应用
 app.mount("#root");

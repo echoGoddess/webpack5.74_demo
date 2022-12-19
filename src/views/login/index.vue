@@ -38,8 +38,9 @@
 import { ref, reactive } from "vue";
 import { ElMessage, FormInstance, FormRules } from "element-plus";
 import router from "@/router";
-import { login } from "@/api/user";
-import Cookies from "js-cookie";
+import { useUserStore } from "@/store/user";
+
+const userstore = useUserStore();
 
 interface UserInfo {
   username: string;
@@ -78,10 +79,8 @@ const loginForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate(async (valid: boolean): Promise<void> => {
     if (valid) {
-      const { username, password } = userInfo;
-      const res = await login({ username, password });
-      if (res && res.token) {
-        Cookies.set("token", res.token);
+      await userstore.loginUser(userInfo);
+      if (userstore.token) {
         router.push("/home");
       }
     } else {
