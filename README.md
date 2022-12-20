@@ -1,4 +1,4 @@
-# webpack5.74_demo
+# webpack5_vue3
 
 ## 技术栈
 > webpack5、vue3、vue-router、pinia、element-plus、node、es6、typescript、sass、eslint、prettier、mockjs
